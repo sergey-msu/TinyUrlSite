@@ -1,0 +1,27 @@
+﻿#<laconf>
+    compiler
+    {
+        using { ns="NFX.Wave.Templatization" }
+        base-class-name="NFX.Wave.Templatization.WaveTemplate"
+        namespace="TinyUrlSite.Pages"
+        abstract="true"
+        summary="Master page for all pages on this site"
+    }
+#</laconf>
+#[class]
+
+    public virtual string Title { get { return "Shorten URLs"; } }
+    protected abstract void renderBody();
+
+#[render]
+<!DOCTYPE html>
+<html>
+<head>
+    <title>?[Title]</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+<body>
+    @[renderBody();]
+</body>
+</html>

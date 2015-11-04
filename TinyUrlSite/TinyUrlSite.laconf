@@ -1,0 +1,85 @@
+﻿application
+{
+    log-root=$(~AUM_HOME_ROOT)disk\
+    log-csv="NFX.Log.Destinations.CSVFileDestination, NFX"
+    debug-default-action="Log,Throw"
+    
+    gdid
+    {
+    }
+ 
+    log
+    { 
+        name="LogSvc"
+        
+        destination
+        {  
+           type=$(/$log-csv)
+           name="TinyURLSite"
+           path=$(/$log-root) 
+           name-time-format='yyyyMMdd'
+           generate-failover-msg=false
+        }
+    }
+
+    data-store
+    {
+        type="NFX.DataAccess.MySQL.MySQLDataStore, NFX.MySQL"
+        log-level="Trace"
+        connect-string="Server=localhost;Database=TinyUrlDB;Uid=root;Pwd=mathf1235;"
+        script-assembly="TinyUrlSite"
+    }
+
+    wave
+    {
+        server
+        {
+            prefix{ name="http://+:8889/" }
+
+            default-error-handler
+            {
+                show-dump { match{name=all} }
+                //log {  match{name=all} }
+            }
+
+            dispatcher
+            {   
+                filter
+                {
+                    name="Errors" order=0 type="NFX.Wave.Filters.ErrorFilter, NFX.Wave"
+                    show-dump
+                    {
+                        //match{name="localhost" order=1 is-local=true }
+                        match{name=all }
+                    }
+                }
+
+                handler
+                {
+                    name="Controllers"
+                    order=1
+                    type="NFX.Wave.Handlers.MVCHandler, NFX.Wave"            
+                    type-location { name="local" assembly="TinyUrlSite.exe" ns { name="TinyUrlSite.Controllers" } }                                            
+                    match { path="{type}/{mvc-action}" var {query-name="*"} }
+                }
+
+                handler
+                {
+                    name="Catch All"
+                    order=2
+                    type="NFX.Wave.Handlers.NOPHandler, NFX.Wave"
+                    match{ }
+                    filter
+                    {
+                      name="Default" type="NFX.Wave.Filters.RedirectFilter, NFX.Wave"
+                      match{ var{name="redirect-url" default="/Pages/Index"} }
+                    }
+                }
+
+            }//dispatcher
+
+        }//server
+
+    }//wave
+
+}//application

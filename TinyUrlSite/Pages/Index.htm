@@ -1,0 +1,82 @@
+﻿#<laconf>
+    compiler
+    {
+        base-class-name="TinyUrlSite.Pages.Master"
+        namespace="TinyUrlSite.Pages"
+        abstract="false"
+        summary="Index page"
+    }
+#</laconf>
+
+#[class]
+
+    public string InitialUrl { get; set; }
+    public string Message { get; set; }
+    public bool IsHyperlink { get; set; }
+
+#[override renderBody()]
+
+<style>
+   #divRoot {
+       width: 480px; 
+       height: 25px; 
+       position: absolute; 
+       top: -130px; 
+       bottom: 0; 
+       left: 0; 
+       right: 0; 
+       margin: auto;
+   }
+
+   #divTitle {
+       font-size: 18px; 
+       font-family: 'Verdana'; 
+   }
+
+   #inputUrl {
+       width: 350px;
+       height: 25px; 
+       font-size: 18px; 
+       font-family: 'Verdana'; 
+   }
+
+   #inputBtn {
+       width: auto;
+       height: 30px; 
+   }
+
+   .message {
+      font-size: 14px; 
+      font-family: 'Verdana';
+      text-align: center; 
+      display: block; 
+      margin: 10px auto;
+   }
+
+   .block {
+       display: inline-block;
+   }
+</style>
+
+<div id="divRoot">
+    <form action="/Tiny/Shorten" method="post">
+        <table>
+            <tr>
+                <td id="divTitle" class="block">URL: </td>
+                <td class="block">
+                    <input id="inputUrl" type="text" name="initialUrl" value="?[InitialUrl]">
+                </td>
+                <td class="block">
+                    <button id="inputBtn" type="submit">Shorten</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    @[if(IsHyperlink){]
+    <div class="message">
+        <a href="?[Message]">?[Message]</a>
+    </div>
+    @[} else {]
+    <div class="message">?[Message]</div>
+    @[}] 
+</div>
