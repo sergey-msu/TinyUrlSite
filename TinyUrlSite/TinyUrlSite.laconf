@@ -38,7 +38,7 @@
 
             default-error-handler
             {
-                show-dump { match{name=all} }
+                //show-dump { match{name=all} }
                 //log {  match{name=all} }
             }
 
@@ -47,6 +47,7 @@
                 filter
                 {
                     name="Errors" order=0 type="NFX.Wave.Filters.ErrorFilter, NFX.Wave"
+                    custom-error-page-type="TinyUrlSite.Pages.Error, TinyUrlSite"
                     show-dump
                     {
                         //match{name="localhost" order=1 is-local=true }
@@ -60,20 +61,7 @@
                     order=1
                     type="NFX.Wave.Handlers.MVCHandler, NFX.Wave"            
                     type-location { name="local" assembly="TinyUrlSite.exe" ns { name="TinyUrlSite.Controllers" } }                                            
-                    match { path="{type}/{mvc-action}" var {query-name="*"} }
-                }
-
-                handler
-                {
-                    name="Catch All"
-                    order=2
-                    type="NFX.Wave.Handlers.NOPHandler, NFX.Wave"
-                    match{ }
-                    filter
-                    {
-                      name="Default" type="NFX.Wave.Filters.RedirectFilter, NFX.Wave"
-                      match{ var{name="redirect-url" default="/Pages/Index"} }
-                    }
+                    match { path="/{mvc-action}" var {name="type" default="Tiny"} var {query-name="*"} }
                 }
 
             }//dispatcher

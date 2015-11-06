@@ -1,6 +1,8 @@
 ﻿#<laconf>
     compiler
-    {
+    {     using { ns="NFX.Wave.Templatization" }
+     using { ns="NFX.Wave" }
+     using { ns="NFX" }
         base-class-name="TinyUrlSite.Pages.Master"
         namespace="TinyUrlSite.Pages"
         abstract="false"
@@ -10,7 +12,7 @@
 
 #[class]
 
-    public string Message { get; set; }
+public string Message { get; set; }
 
 #[override renderBody()]
 
@@ -23,6 +25,7 @@
    }
 </style>
 
+<h1>An error has occured</h1>
 <div id="divRoot">
-    ?[Message]
+    ?[Message] aaaa ?[RenderingContext]
 </div>

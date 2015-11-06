@@ -2,13 +2,12 @@
 
 namespace TinyUrlSite.Models
 {
-    [Table(name: "UrlMap")]
     public class UrlMap : TypedRow
     {
-        [Field(key: true)]
-        public string Id { get; set; }
+        [Field(key: true, required: true)]
+        public long Id { get; set; }
                   
-        [Field]
+        [Field(required: true)]
         public string URL { get; set; }
     }
 }

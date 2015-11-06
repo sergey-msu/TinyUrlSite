@@ -4,9 +4,9 @@ CREATE DATABASE TinyUrlDB;
 
 USE TinyUrlDB;
 
-CREATE TABLE UrlMap
+CREATE TABLE tbl_UrlMap
 (
-  id VARCHAR(100),
+  id bigint not null,
   URL VARCHAR(8000),
   PRIMARY KEY (id)
 );

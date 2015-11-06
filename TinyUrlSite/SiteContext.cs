@@ -1,29 +1,22 @@
-﻿using NFX;
+﻿using System.Threading;
+using NFX;
 using NFX.DataAccess.MySQL;
 
 namespace TinyUrlSite
 {
     public static class SiteContext
     {
-        #region CONSTS
-
-        private const string SCRIPT_ASM = "TinyUrlSite";
-        private const string HANDLER_ASM = "TinyUrlSite, TinyUrlSite";
-
-        #endregion
-
-        private static readonly MySQLDataStore s_DataStore;
-
-        static SiteContext()
-        {
-            s_DataStore = (MySQLDataStore)App.DataStore;
-            s_DataStore.QueryResolver.ScriptAssembly = SCRIPT_ASM;
-            s_DataStore.QueryResolver.RegisterHandlerLocation(HANDLER_ASM);
-        }
+        private static long s_ID; 
 
         public static MySQLDataStore DataStore
         {
-            get { return s_DataStore; }
+            get { return App.DataStore as MySQLDataStore; }
+        }
+
+        public static long NextId()
+        {
+            return Interlocked.Increment(ref s_ID);
         }
     }
 }
+
