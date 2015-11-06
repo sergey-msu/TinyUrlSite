@@ -37,10 +37,6 @@
     </NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aum.Cluster, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\libs\Aum.Cluster.dll</HintPath>
-    </Reference>
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\MySql.Data.dll</HintPath>
